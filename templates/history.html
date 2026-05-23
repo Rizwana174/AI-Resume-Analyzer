@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Resume Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <a href="/">Home</a>
+
+        <a href="/history">Dashboard</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="container">
+
+        <h1>Resume History Dashboard</h1>
+
+        <table border="1">
+
+            <tr>
+
+                <th>Filename</th>
+
+                <th>Resume Score</th>
+
+                <th>ATS Score</th>
+
+                <th>Predicted Role</th>
+
+            </tr>
+
+            {% for row in data %}
+
+            <tr>
+
+                <td>{{ row[0] }}</td>
+
+                <td>{{ row[1] }}</td>
+
+                <td>{{ row[2] }}%</td>
+
+                <td>{{ row[3] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <br><br>
+
+        <canvas id="myChart"></canvas>
+
+    </div>
+
+    <script>
+
+        const labels = [
+            {% for row in data %}
+                "{{ row[0] }}",
+            {% endfor %}
+        ];
+
+        const resumeScores = [
+            {% for row in data %}
+                {{ row[1] }},
+            {% endfor %}
+        ];
+
+        const atsScores = [
+            {% for row in data %}
+                {{ row[2] }},
+            {% endfor %}
+        ];
+
+        const data = {
+
+            labels: labels,
+
+            datasets: [
+
+                {
+                    label: 'Resume Score',
+                    data: resumeScores,
+                    borderWidth: 1
+                },
+
+                {
+                    label: 'ATS Score',
+                    data: atsScores,
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const config = {
+
+            type: 'bar',
+
+            data: data,
+
+            options: {
+
+                responsive: true,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        };
+
+        new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI Resume Analyzer</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <a href="/">Home</a>
+
+        <a href="/history">Dashboard</a>
+
+        <a href="/login">Login</a>
+
+        <a href="/signup">Signup</a>
+
+        <a href="/logout">Logout</a>
+
+    </div>
+
+    <div class="container">
+
+        <h1>AI Resume Analyzer</h1>
+
+        <form
+            action="/analyze"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="file"
+                name="resume"
+                required
+            >
+
+            <button type="submit">
+
+                Analyze Resume
+
+            </button>
+
+        </form>
+
+        {% if extracted_text %}
+
+        <div class="section">
+
+            <h2>Extracted Resume Text</h2>
+
+            <pre>{{ extracted_text }}</pre>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Detected Skills</h2>
+
+            <ul>
+
+                {% for skill in skills %}
+
+                <li>{{ skill }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Resume Score</h2>
+
+            <h3>{{ score }}/100</h3>
+
+            <h3>{{ performance }}</h3>
+
+        </div>
+
+        <div class="section">
+
+            <h2>ATS Compatibility Score</h2>
+
+            <h3>{{ ats_score }}%</h3>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Predicted Job Role</h2>
+
+            <h3>{{ predicted_role }}</h3>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Suggestions</h2>
+
+            <ul>
+
+                {% for suggestion in suggestions %}
+
+                <li>{{ suggestion }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Recommended Skills To Add</h2>
+
+            <ul>
+
+                {% for skill in missing_skills %}
+
+                <li>{{ skill }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
