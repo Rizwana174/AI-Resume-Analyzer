@@ -74,6 +74,9 @@ http://127.0.0.1:5000
 - PDF report generation
 - Admin dashboard
 - Cloud deployment
+## Live Demo
+https://ai-resume-analyzer-1-9y69.onrender.com
+
 
 ## Author
 
